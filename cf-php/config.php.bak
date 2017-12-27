@@ -1,0 +1,7 @@
+<?php
+define("DOMAIN", "b2x-segwit.io");
+define("NAME", "node2");
+define("NUMBER_OF_RECORDS", 10);
+define("USER", "");
+define("KEY", "");
+define("SEED_DUMP", "seeder/cf-php/dnsseed.dump");
