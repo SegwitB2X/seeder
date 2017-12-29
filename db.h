@@ -16,7 +16,14 @@
 
 static inline int GetRequireHeight(const bool testnet = fTestNet)
 {
-    return testnet ? 12000000 : 500000;
+    return testnet ? 12000000 : 501450;
+}
+
+static inline int GetRoughHardforkBlocks(const int64_t currTime, const bool testnet = fTestNet)
+{
+  return testnet
+    ? ((currTime - 1506023937) / 60) / 3
+    : ((currTime - 1514473353) / 60) / 3;
 }
 
 std::string static inline ToString(const CService &ip) {
@@ -105,7 +112,12 @@ public:
     if (!(services & NODE_NETWORK)) return false;
     if (!ip.IsRoutable()) return false;
     if (clientVersion && clientVersion < REQUIRE_VERSION) return false;
-    if (blocks && blocks < GetRequireHeight()) return false;
+
+    const auto minHeight = GetRequireHeight();
+    if (blocks && blocks < minHeight) return false;
+    const auto minHFHeight = minHeight + GetRoughHardforkBlocks(lastTry);
+    const auto maxHFHeight = minHeight + GetRoughHardforkBlocks(lastTry + 360 * 60); // +6h
+    if (blocks < minHFHeight || blocks > maxHFHeight) return false;
 
     if (total <= 3 && success * 2 >= total) return true;
 
