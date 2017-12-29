@@ -115,8 +115,9 @@ public:
 
     const auto minHeight = GetRequireHeight();
     if (blocks && blocks < minHeight) return false;
-    const auto minHFHeight = minHeight + GetRoughHardforkBlocks(lastTry);
-    const auto maxHFHeight = minHeight + GetRoughHardforkBlocks(lastTry + 360 * 60); // +6h
+    const auto now = time(NULL);
+    const auto minHFHeight = minHeight + GetRoughHardforkBlocks(now);
+    const auto maxHFHeight = minHeight + GetRoughHardforkBlocks(now + 720 * 60); // +12h
     if (blocks < minHFHeight || blocks > maxHFHeight) return false;
 
     if (total <= 3 && success * 2 >= total) return true;

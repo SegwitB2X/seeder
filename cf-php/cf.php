@@ -57,15 +57,15 @@ if (!file_exists($seed_dump)) {
         $ip_array_split = explode(":", $ip_array_line); //explode string at ":"
         $ip = $ip_array_split[0]; // [0] is the ip address of the line
 
-        $pos = strpos($ip_array_split[1], "5556"); //position of 7890
-        $bool_pos = is_bool($pos); //custom ports (!= 7890) not allowed.
+        $pos = strpos($ip_array_split[1], "8333"); //position of 8333
+        $bool_pos = is_bool($pos); //custom ports (!= 8333) not allowed.
 
         if ($pos !== false) {
-            $ip_array_split = str_replace("5556", "", $ip_array_split[1]); //remove port
+            $ip_array_split = str_replace("8333", "", $ip_array_split[1]); //remove port
             $ip_array_split = trim($ip_array_split); //remove spaces at the start
-//            $ip_array_split = substr($ip_array_split, 0, 1); //get first charakter == the GOOD parameter in the dump file /
-//            $good = $ip_array_split;
-            $good = 1;
+            $ip_array_split = substr($ip_array_split, 0, 1); //get first charakter == the GOOD parameter in the dump file /
+            $good = $ip_array_split;
+//            $good = 1;
 
             $ip_array_while = array(
                 'ip' => $ip,
